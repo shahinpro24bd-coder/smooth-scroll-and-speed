@@ -28,3 +28,13 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Vercel builds use Nitro's Vercel server preset; other builds retain the platform default, because public HTML requires request-time language rendering.
+- Language-switch and internal navigation URLs carry an explicit language; cookie-selected responses are private to prevent cross-language CDN/browser cache reuse.
+- Public site pages live in `src/site/*.html` (English source) and `src/lib/site-content/fallback.generated.json` (per-language text keyed by text hash); edit both together so every language stays in sync.
+- Site images and videos are self-hosted under `public/img` and `public/reels`, so the site works on any host without Lovable asset URLs.
+- Browser-saved admin edits use versioned storage keys; bump the version when content is replaced wholesale so stale edits never re-apply.
+- Public pages share one stylesheet (`public/lama.css`) and one behaviour script (`public/js/site.js`, safe to re-run after `speed.js` in-place swaps); no Bootstrap/jQuery, so page markup stays light and consistent.
+- New visible text in `src/site/*.html` must reuse an existing English string exactly or be added to `fallback.generated.json` with its Arabic translation, because English is the default language and text is matched by hash.
+- The homepage has its own layer, `public/home.css` + `public/js/home.js` (all classes `x-*`), loaded only by `src/site/index.html`, so homepage redesigns never restyle the other pages that share `public/lama.css`.
+- The site footer markup is identical in every `src/site/*.html` page and styled only in `public/lama.css`; change all pages together so the footer never differs between pages.
