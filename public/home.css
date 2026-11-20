@@ -173,9 +173,9 @@ html.js .x-line > [data-reveal].is-in { translate: none; }
 .x-tr__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .x-tr__grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 72px 72px; opacity: 0.55; mask-image: radial-gradient(60% 50% at 50% 30%, #000, transparent 85%); -webkit-mask-image: radial-gradient(60% 50% at 50% 30%, #000, transparent 85%); animation: x-tr-pan 40s linear infinite; }
 @keyframes x-tr-pan { to { background-position: 72px 72px, 72px 72px; } }
-.x-tr__blob { position: absolute; border-radius: 50%; filter: blur(100px); }
-.x-tr__blob--a { width: 560px; height: 480px; inset-inline-end: -8%; top: -6%; background: rgba(63, 208, 220, 0.18); animation: x-drift-b 24s ease-in-out infinite; }
-.x-tr__blob--b { width: 520px; height: 460px; inset-inline-start: -10%; top: 42%; background: rgba(232, 178, 190, 0.2); animation: x-drift-a 28s ease-in-out infinite; }
+.x-tr__blob { position: absolute; border-radius: 50%; }
+.x-tr__blob--a { width: 560px; height: 480px; inset-inline-end: -8%; top: -6%; background: radial-gradient(closest-side, rgba(63, 208, 220, 0.18), rgba(63, 208, 220, 0.08) 55%, transparent); animation: x-drift-b 24s ease-in-out infinite; }
+.x-tr__blob--b { width: 520px; height: 460px; inset-inline-start: -10%; top: 42%; background: radial-gradient(closest-side, rgba(232, 178, 190, 0.2), rgba(232, 178, 190, 0.09) 55%, transparent); animation: x-drift-a 28s ease-in-out infinite; }
 
 .x-treat__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: clamp(26px, 3vw, 38px); }
 .x-treat__head > * { min-width: 0; }
@@ -321,10 +321,10 @@ html.js .x-tcard[data-reveal].is-in .x-tcard__link:hover .x-tcard__media img { s
    ===================================================================== */
 @property --x-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
-.x-stage__aurora { position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); opacity: 0.55; pointer-events: none; }
-.x-stage__aurora--a { width: 520px; height: 420px; left: -8%; top: -18%; background: rgba(63, 208, 220, 0.32); animation: x-drift-a 18s ease-in-out infinite; }
-.x-stage__aurora--b { width: 560px; height: 460px; right: 12%; bottom: -30%; background: rgba(14, 165, 181, 0.5); animation: x-drift-b 22s ease-in-out infinite; }
-.x-stage__aurora--c { width: 380px; height: 320px; right: -6%; top: 6%; background: rgba(111, 223, 194, 0.22); animation: x-drift-a 26s ease-in-out -8s infinite reverse; }
+.x-stage__aurora { position: absolute; z-index: -1; border-radius: 50%; opacity: 0.55; pointer-events: none; }
+.x-stage__aurora--a { width: 520px; height: 420px; left: -8%; top: -18%; background: radial-gradient(closest-side, rgba(63, 208, 220, 0.32), rgba(63, 208, 220, 0.14) 55%, transparent); animation: x-drift-a 18s ease-in-out infinite; }
+.x-stage__aurora--b { width: 560px; height: 460px; right: 12%; bottom: -30%; background: radial-gradient(closest-side, rgba(14, 165, 181, 0.5), rgba(14, 165, 181, 0.22) 55%, transparent); animation: x-drift-b 22s ease-in-out infinite; }
+.x-stage__aurora--c { width: 380px; height: 320px; right: -6%; top: 6%; background: radial-gradient(closest-side, rgba(111, 223, 194, 0.22), rgba(111, 223, 194, 0.1) 55%, transparent); animation: x-drift-a 26s ease-in-out -8s infinite reverse; }
 @keyframes x-drift-a { 50% { translate: 90px 60px; scale: 1.15; } }
 @keyframes x-drift-b { 50% { translate: -120px -50px; scale: 0.9; } }
 .x-stage__lines { animation: x-grid-pan 30s linear infinite; }
@@ -797,7 +797,7 @@ html.js .x-ab__services[data-reveal].is-in li:nth-child(4) { transition-delay: 0
 .x-ba { background: var(--paper); overflow: clip; isolation: isolate; }
 .x-ba__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .x-ba__grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 72px 72px; opacity: 0.55; mask-image: radial-gradient(55% 65% at 72% 50%, #000, transparent 85%); -webkit-mask-image: radial-gradient(55% 65% at 72% 50%, #000, transparent 85%); animation: x-tr-pan 40s linear infinite; }
-.x-ba__blob { position: absolute; width: 540px; height: 460px; inset-inline-end: -8%; top: 8%; border-radius: 50%; filter: blur(100px); background: rgba(63, 208, 220, 0.16); animation: x-drift-b 24s ease-in-out infinite; }
+.x-ba__blob { position: absolute; width: 540px; height: 460px; inset-inline-end: -8%; top: 8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(63, 208, 220, 0.16), rgba(63, 208, 220, 0.07) 55%, transparent); animation: x-drift-b 24s ease-in-out infinite; }
 
 .x-ba__layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 5vw, 84px); align-items: center; }
 .x-ba__copy { min-width: 0; }

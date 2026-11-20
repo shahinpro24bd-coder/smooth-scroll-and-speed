@@ -73,6 +73,8 @@
     });
     document.querySelectorAll("[data-ik-bg]").forEach(function (el) {
       var slots = (el.getAttribute("data-ik-bg") || "").split("|");
+      var lazy = el.getAttribute("data-lazy-bg");
+      if (lazy && images[slots[0]]) el.setAttribute("data-lazy-bg", images[slots[0]]);
       var i = -1;
       el.setAttribute(
         "style",

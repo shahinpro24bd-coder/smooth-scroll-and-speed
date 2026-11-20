@@ -174,25 +174,32 @@
     ticking = true;
     raf = requestAnimationFrame(function () { ticking = false; onScroll(); });
   }
+  // Read every position first, then write: mixing reads and writes forced
+  // a fresh layout for each card on every scroll frame.
   function onScroll() {
     var vh = window.innerHeight || 800;
-    if (!reduce) {
-      var cards = document.querySelectorAll("[data-stack-card]");
-      for (var i = 0; i < cards.length - 1; i++) {
-        var r = cards[i].getBoundingClientRect();
-        var nr = cards[i + 1].getBoundingClientRect();
-        var overlap = Math.min(1, Math.max(0, (r.bottom - nr.top) / r.height));
-        cards[i].style.setProperty("--s", (1 - overlap * 0.06).toFixed(4));
-      }
-    }
+    var cards = reduce ? [] : document.querySelectorAll("[data-stack-card]");
+    var rects = [];
+    for (var i = 0; i < cards.length; i++) rects.push(cards[i].getBoundingClientRect());
     var line = document.querySelector("[data-timeline]");
-    if (line) {
-      var lr = line.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (vh * 0.6 - lr.top) / lr.height));
-      line.style.setProperty("--p", p.toFixed(4));
-      line.querySelectorAll("[data-step]").forEach(function (s) {
-        s.classList.toggle("is-lit", s.getBoundingClientRect().top < vh * 0.6);
-      });
+    var steps = line ? line.querySelectorAll("[data-step]") : [];
+    var lr = line ? line.getBoundingClientRect() : null;
+    var stepTops = [];
+    for (var j = 0; j < steps.length; j++) stepTops.push(steps[j].getBoundingClientRect().top);
+
+    for (var k = 0; k < cards.length - 1; k++) {
+      var r = rects[k], nr = rects[k + 1];
+      var overlap = r.height ? Math.min(1, Math.max(0, (r.bottom - nr.top) / r.height)) : 0;
+      var sv = (1 - overlap * 0.06).toFixed(4);
+      if (cards[k].__s !== sv) { cards[k].__s = sv; cards[k].style.setProperty("--s", sv); }
+    }
+    if (line && lr && lr.height) {
+      var p = Math.min(1, Math.max(0, (vh * 0.6 - lr.top) / lr.height)).toFixed(3);
+      if (line.__p !== p) { line.__p = p; line.style.setProperty("--p", p); }
+      for (var m = 0; m < steps.length; m++) {
+        var lit = stepTops[m] < vh * 0.6;
+        if (steps[m].__lit !== lit) { steps[m].__lit = lit; steps[m].classList.toggle("is-lit", lit); }
+      }
     }
   }
 

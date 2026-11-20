@@ -363,22 +363,24 @@
     document.addEventListener("touchstart", intent, { passive: true });
   });
 
+  // Background prefetch of the menu pages, only on fast connections and only
+  // where those links actually lead somewhere (the homepage keeps visitors on
+  // it). Hover / touch on a link still prefetches it everywhere.
   function warmLinks() {
+    var c = navigator.connection;
+    if (c && (c.saveData || /(^|-)(2g|3g)$/.test(c.effectiveType || ""))) return;
+    if (/^\/(index\.html)?$/.test(location.pathname)) return;
     var go = function () {
       var links = document.querySelectorAll("a.nav-link[href], .navbar-nav a[href], .navbar-actions a[href]");
       for (var i = 0; i < links.length; i++) {
         var url = pageUrl(links[i].href);
-        if (url) load(withLang(url));
+        if (url && url.pathname !== location.pathname) load(withLang(url));
       }
-      var here = pageUrl(location.href);
-      if (here) load(here);
-      document.querySelectorAll(".lang-menu a[href]").forEach(function (link) {
-        var alternate = pageUrl(link.href);
-        if (alternate) load(alternate);
-      });
     };
-    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1200 });
-    else setTimeout(go, 400);
+    setTimeout(function () {
+      if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 3000 });
+      else go();
+    }, 2500);
   }
 
   var vt = document.createElement("style");

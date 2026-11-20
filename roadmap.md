@@ -15,3 +15,5 @@
 - [x] Homepage: redesign every section after Treatments (Why, Before/After, Qualifications, Recognition, Reviews, Clinic info, CTA) — "Atelier" editorial look inspired by drarmanmolazadeh.com, no tags on pictures, EN + AR, desktop + phone
 - [x] Homepage: rebuild every section after Why Choose Us (Before/After, Qualifications, Recognition, Reviews, Clinic info, CTA) in the hero / about / treatments / why design language — EN + AR, desktop + phone
 - [x] Footer: rebuilt on every page after the user's reference (brand column, two link columns, framed clinic card, bottom bar with EN | ع switch, square back-to-top)
+- [x] Fix laggy / stuttering scrolling on every page (phone + desktop)
+- [x] Speed up page loading on every page and section

@@ -24,22 +24,44 @@
       });
     }
 
+    // Scroll work runs at most once per frame, and the page height is only
+    // measured on resize/load, so scrolling never forces an extra layout.
+    var maxScroll = 1;
+    function measure() {
+      maxScroll = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+    }
+    var lastHeader = null, lastTop = null, lastP = "";
     function onScroll() {
+      window.__lmTick = 0;
       var y = window.scrollY || 0;
       var h = document.querySelector("[data-header]");
       var t = document.querySelector("[data-top]");
-      if (h) h.classList.toggle("is-scrolled", y > 40);
-      if (t) t.classList.toggle("is-visible", y > 600);
+      var scrolled = y > 40, visible = y > 600;
+      if (h && lastHeader !== scrolled) { h.classList.toggle("is-scrolled", scrolled); lastHeader = scrolled; }
+      if (t && lastTop !== visible) { t.classList.toggle("is-visible", visible); lastTop = visible; }
       var pb = document.querySelector(".lm-progress");
       if (pb) {
-        var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-        pb.style.setProperty("--p", Math.min(1, Math.max(0, y / max)).toFixed(4));
+        var p = Math.min(1, Math.max(0, y / maxScroll)).toFixed(3);
+        if (p !== lastP) { pb.style.setProperty("--p", p); lastP = p; }
       }
     }
-    if (!window.__lmScroll) {
-      window.__lmScroll = true;
-      window.addEventListener("scroll", onScroll, { passive: true });
+    window.__lmOnScroll = onScroll;
+    window.__lmMeasure = measure;
+    // Re-registered on every run (in-place page swaps drop page listeners);
+    // the previous copies are removed first so they never stack up.
+    if (window.__lmScrollFn) {
+      window.removeEventListener("scroll", window.__lmScrollFn);
+      window.removeEventListener("resize", window.__lmResizeFn);
     }
+    window.__lmScrollFn = function () {
+      if (window.__lmTick) return;
+      window.__lmTick = requestAnimationFrame(function () { window.__lmOnScroll(); });
+    };
+    window.__lmResizeFn = function () { window.__lmMeasure(); window.__lmOnScroll(); };
+    window.addEventListener("scroll", window.__lmScrollFn, { passive: true });
+    window.addEventListener("resize", window.__lmResizeFn, { passive: true });
+    if (document.readyState !== "complete") window.addEventListener("load", window.__lmResizeFn, { once: true });
+    measure();
     onScroll();
 
     // Scroll progress beam
