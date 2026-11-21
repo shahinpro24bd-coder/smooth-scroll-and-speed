@@ -17,3 +17,6 @@
 - [x] Footer: rebuilt on every page after the user's reference (brand column, two link columns, framed clinic card, bottom bar with EN | ع switch, square back-to-top)
 - [x] Fix laggy / stuttering scrolling on every page (phone + desktop)
 - [x] Speed up page loading on every page and section
+- [ ] Mobile scroll still feels laggy — keep chasing it until it feels smooth on a real phone
+- [ ] Home: whole page in the hero's dark stage look — hero's colour combo + hero-style background on every section
+- [ ] Other pages (About, Service, Appointment, Contact): stay light porcelain, but carry the hero's colour combo
